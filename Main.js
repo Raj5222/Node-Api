@@ -25,12 +25,12 @@ const upload = multer({ storage: storage });
 app.post('/', upload.single('image'), async (req, res) => {
   try {
     // Read the image file from memory.
-    const image = await readFileAsync(req.file.buffer);
+    const image = req.file.buffer;
 
     // Call the Google Cloud Vision API to detect faces and objects.
     const [faceResult, objectResult] = await Promise.all([
-      client.faceDetection({ image }),
-      client.objectLocalization({ image })
+      client.faceDetection({ image: { content: image } }),
+      client.objectLocalization({ image: { content: image } })
     ]);
 
     // Parse the face detection result.
