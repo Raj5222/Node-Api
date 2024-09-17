@@ -9,7 +9,7 @@ const app = express();
 const port = 8080;
 
 const client = new ImageAnnotatorClient({
-  keyFilename: '/etc/secrets/Raw_data.json'
+  keyFilename: process.env.Raw_data
 });
 
 const readFileAsync = promisify(fs.readFile);
